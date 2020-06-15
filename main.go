@@ -31,12 +31,12 @@ type objProcesosStats struct {
 	Total        string `json:"total"`
 }
 type objProcesosTodos struct {
-	Procid       string `json:"procid"`
-	ProcNombre   string `json:"procnombre"`
-	ProcUsuario  string `json:"procusuario"`
-	ProcPUsuario string `json:"procpusuario"`
-	ProcEstado   string `json:"procestado"`
-	ProcRam      string `json:"procram"`
+	Procid      string `json:"procid"`
+	ProcNombre  string `json:"procnombre"`
+	ProcUsuario string `json:"procusuario"`
+	ProcPid     string `json:"procpid"`
+	ProcEstado  string `json:"procestado"`
+	ProcRam     string `json:"procram"`
 }
 
 func main() {
@@ -165,9 +165,9 @@ func calculoNumProc(s socketio.Conn) {
 			)
 			lines := strings.Split(string(file_data), "\n")
 			//fmt.Println(string(file_data))
-			for j := 0; j < 9; j++ {
+			for j := 0; j < 11; j++ {
 				actual := strings.Split(string(lines[j]), ":")
-				if actual[0] == "Name" || actual[0] == "Pid" || actual[0] == "State" || actual[0] == "Uid" || actual[0] == "PPid" {
+				if actual[0] == "Name" || actual[0] == "Pid" || actual[0] == "State" || actual[0] == "Uid" || actual[0] == "PPid" || actual[0] == "FDsize" {
 					if actual[0] == "Name" {
 						//fmt.Print(strings.ReplaceAll(actual[0], " ", ""))
 						//fmt.Println(strings.ReplaceAll((strings.ReplaceAll(actual[1], " ", "")), "	", ""))
@@ -204,9 +204,14 @@ func calculoNumProc(s socketio.Conn) {
 						//fmt.Println(strings.ReplaceAll((strings.ReplaceAll(actual[1], " ", "")), "	", ""))
 						ppid = (strings.ReplaceAll((strings.ReplaceAll(actual[1], " ", "")), "	", ""))
 					}
+					if actual[0] == "FDsize" {
+						//fmt.Print(actual[0])
+						//fmt.Println(strings.ReplaceAll((strings.ReplaceAll(actual[1], " ", "")), "	", ""))
+						ramact = (strings.ReplaceAll((strings.ReplaceAll(actual[1], " ", "")), "	", ""))
+					}
 				}
 			}
-			objproc := objProcesosTodos{Procid: pid, ProcNombre: nameactual, ProcUsuario: uid, ProcPUsuario: ppid, ProcEstado: state, ProcRam: ramact}
+			objproc := objProcesosTodos{Procid: pid, ProcNombre: nameactual, ProcUsuario: uid, ProcPid: ppid, ProcEstado: state, ProcRam: ramact}
 			objsprocesos = append(objsprocesos, objproc)
 		}
 		fmt.Println(objsprocesos)

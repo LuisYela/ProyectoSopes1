@@ -108,11 +108,28 @@
                 </tr>
               </tbody>
             </table>
-            <ul id="statustodos" class="list-group">
-              <li v-for="m in procs" class="list-group-item">
-                {{ m }} 
-              </li>
-            </ul>
+            <table class="table table-striped table-dark">
+              <thead>
+                <tr>
+                  <th>PID</th>
+                  <th>Nombre</th>
+                  <th>Usuario</th>
+                  <th>Estado</th>
+                  <th>ParentID</th>
+                  <th>Ram</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="m in procs">
+                  <td>{{m.procid}}</td>
+                  <td>{{m.procnombre}}</td>
+                  <td>{{m.procusuario}}</td>
+                  <td>{{m.procestado}}</td>
+                  <td>{{m.procpid}}</td>
+                  <td>{{m.procram}}</td>
+                </tr>
+              </tbody>
+            </table>
             <form>
               <input type="text" v-model="procesokill" class="form-control">
               <button @click.prevent="pedirStatsproc" class="btn btn-dark btn-block">Numero de procesos</button>

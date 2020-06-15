@@ -52,7 +52,7 @@ new Vue({
     }),
     socket.on("proclistado", (message) => {
       console.log(message)
-      this.procs.push(message)
+      this.procs=message
     })
   },
   data: {
