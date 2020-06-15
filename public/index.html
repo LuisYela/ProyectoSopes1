@@ -22,7 +22,6 @@
     <div class="container mt-5">
       <div class="row">
         <div class="col-md-12 offset-md-1">
-
           <div id="ventana-cpu" class="card">
             <ul id="statuscpu" class="list-group">
               <li v-for="m in messagescpu" class="list-group-item">
@@ -36,9 +35,9 @@
           <h3 class="text-primary text-center">
             Porcentaje de uso del CPU
           </h3>
-            <div class="col-sm-12 text-center">
-              <div id="line-chart"></div>
-            </div>
+          <div class="col-sm-12 text-center">
+            <div id="line-chart"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -89,14 +88,34 @@
         <div class="col-md-12 offset-md-1">
 
           <div id="ventana-stats" class="card">
+            <table class="table table-striped table-dark">
+              <thead>
+                <tr>
+                  <th>Pocesos en ejecucion</th>
+                  <th>Procesos suspendidos</th>
+                  <th>Procesos detenidos</th>
+                  <th>Procesos zombies</th>
+                  <th>Total de procesos</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{mproc.ejecutandose}}</td>
+                  <td>{{mproc.suspendidos}}</td>
+                  <td>{{mproc.detenidos}}</td>
+                  <td>{{mproc.zombies}}</td>
+                  <td>{{mproc.total}}</td>
+                </tr>
+              </tbody>
+            </table>
             <ul id="statustodos" class="list-group">
-              <li v-for="m in messagesstats" class="list-group-item">
+              <li v-for="m in procs" class="list-group-item">
                 {{ m }} 
               </li>
             </ul>
             <form>
               <input type="text" v-model="procesokill" class="form-control">
-              <button @click.prevent="pedirStatscpu" class="btn btn-dark btn-block">Send</button>
+              <button @click.prevent="pedirStatsproc" class="btn btn-dark btn-block">Numero de procesos</button>
             </form>
           </div>
         </div>

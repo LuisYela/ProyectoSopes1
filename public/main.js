@@ -46,18 +46,27 @@ new Vue({
 new Vue({
   el: '#ventana-stats',
   created() {
-    socket.on("statsgeneral", (message) => {
+    socket.on("statsproc", (message) => {
       console.log(message)
-      this.messages.push(message)
+      this.mproc=message
+    }),
+    socket.on("proclistado", (message) => {
+      console.log(message)
+      this.procs.push(message)
     })
   },
   data: {
     procesokill:"",
-    messagesstats: []
+    mproc: {},
+    procs: []
   },
   methods: {
-    sendMessage() {
-      socket.emit("TextoEnviado", this.cpustat)
+    pedirStatsproc() {
+      socket.emit("statsproc")
+      this.cpustat = "";
+    },
+    borrarproc() {
+      socket.emit("borrarproc", this.cpustat)
       this.cpustat = "";
     }
   }
