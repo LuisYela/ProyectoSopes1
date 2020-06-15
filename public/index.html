@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Proyecto 1 Sopes 1</title>
+    <!--BOOTSTRAP-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!--CSS-->
+    <link rel="stylesheet" href="main.css">
+    <!--CHARTS-->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand" href="index.html">Proyecto1</a>
+      </nav>
+
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col-md-12 offset-md-1">
+
+          <div id="ventana-cpu" class="card">
+            <ul id="statuscpu" class="list-group">
+              <li v-for="m in messagescpu" class="list-group-item">
+                Uso del cpu es: {{ m.uso }}% [ocupado: {{ m.busy }} , total: {{ m.total}}]
+              </li>
+            </ul>
+            <form>
+              <button @click.prevent="pedirStatscpu" class="btn btn-dark btn-block">Solicitar uso del cpu</button>
+            </form>
+          </div>
+          <h3 class="text-primary text-center">
+            Porcentaje de uso del CPU
+          </h3>
+            <div class="col-sm-12 text-center">
+              <div id="line-chart"></div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <!-- MemoriaRam -->
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col-md-12 offset-md-1">
+
+          <div id="ventana-ram" class="card">
+            <ul id="statusram" class="list-group">
+              <li v-for="m in messagesram" class="list-group-item">
+                {{ m.libre }} {{ m.disponible }} {{ m.total }} 
+              </li>
+            </ul>
+            <form>
+              <button @click.prevent="pedirStatsram" class="btn btn-dark btn-block">Solicitar uso de ram</button>
+            </form>
+          </div>
+          <h3 class="text-primary text-center">
+            Uso de la RAM
+          </h3>
+          <div class="row">
+            <div class="col-sm-4 text-center">
+              <h4 class="text-primary text-center">
+                Libre
+              </h4>
+              <div id="line-chartram1"></div>
+            </div>
+            <div class="col-sm-4 text-center">
+              <h4 class="text-primary text-center">
+                Disponible
+              </h4>
+              <div id="line-chartram2"></div>
+            </div>
+            <div class="col-sm-4 text-center">
+              <h4 class="text-primary text-center">
+                Total
+              </h4>
+              <div id="line-chartram3"></div>
+            </div>
+        </div>
+        </div>
+      </div>
+    </div>
+    <!-- otrosStats -->
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col-md-12 offset-md-1">
+
+          <div id="ventana-stats" class="card">
+            <ul id="statustodos" class="list-group">
+              <li v-for="m in messagesstats" class="list-group-item">
+                {{ m }} 
+              </li>
+            </ul>
+            <form>
+              <input type="text" v-model="procesokill" class="form-control">
+              <button @click.prevent="pedirStatscpu" class="btn btn-dark btn-block">Send</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- VueJs -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <!-- Socket.io -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+
+    <!--CUSTOM JS -->
+    <script src="main.js"></script>
+  </body>
+</html>
