@@ -25,7 +25,7 @@
           <div id="ventana-cpu" class="card">
             <ul id="statuscpu" class="list-group">
               <li class="list-group-item">
-                Uso del cpu es: {{ messagescpu.uso }}% [ocupado: {{ messagescpu.busy }} , total: {{ messagescpu.total}}]
+                Uso del cpu es: {{ messagescpu.uso }}%     [ocupado: {{ messagescpu.busy }} ,     total: {{ messagescpu.total}}]
               </li>
             </ul>
             <form>
@@ -48,7 +48,7 @@
           <div id="ventana-ram" class="card">
             <ul id="statusram" class="list-group">
               <li class="list-group-item">
-                Usada: {{ messagesram.total - messagesram.libre }} Libre: {{ messagesram.libre }}  Disponible:{{ messagesram.disponible }}  Total:{{ messagesram.total }} 
+                Usada: {{ messagesram.total - messagesram.libre }}     Libre: {{ messagesram.libre }}     Disponible:{{ messagesram.disponible }}     Total:{{ messagesram.total }}     porcentaje consumida:{{((messagesram.total - messagesram.libre)*100)/messagesram.total}}%
               </li>
             </ul>
             <form>
