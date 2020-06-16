@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
+	"os/exec"
 	"time"
 
 	"io/ioutil"
@@ -62,10 +64,20 @@ func main() {
 		//
 		go calculoNumProc(s)
 	})
-	server.OnEvent("/", "TextoEnviado", func(s socketio.Conn, msg string) {
+	server.OnEvent("/", "borrarproceso", func(s socketio.Conn, msg string) bool {
 		s.SetContext(msg)
-		fmt.Println("Proceso que se decea borrar:", msg)
-		s.Emit("statsMemory", msg)
+		//fmt.Println("Proceso que se decea borrar:", msg)
+		out, err := exec.Command("kill", msg).Output()
+		fmt.Println("despues del bash")
+		if err != nil {
+			fmt.Println("fallo")
+			log.Fatal(err)
+			os.Exit(1)
+		}
+		fmt.Println(string(out))
+		//fmt.Println("exito")
+		//s.Emit("borrarproceso", msg)
+		return true
 	})
 	server.OnEvent("/", "bye", func(s socketio.Conn) string {
 		last := s.Context().(string)
@@ -150,7 +162,7 @@ func calculoNumProc(s socketio.Conn) {
 			tot      int = 0
 		)
 		for i := 0; i < len(files)-64; i++ {
-			fmt.Println(files[i].Name())
+			//fmt.Println(files[i].Name())
 			file_data, err := ioutil.ReadFile("/proc/" + files[i].Name() + "/status")
 			if err != nil {
 				fmt.Println("Hubo un error")
@@ -214,10 +226,10 @@ func calculoNumProc(s socketio.Conn) {
 			objproc := objProcesosTodos{Procid: pid, ProcNombre: nameactual, ProcUsuario: uid, ProcPid: ppid, ProcEstado: state, ProcRam: ramact}
 			objsprocesos = append(objsprocesos, objproc)
 		}
-		fmt.Println(objsprocesos)
+		//fmt.Println(objsprocesos)
 		tot = ensusp + enejec + enidle + enzombie
 		objprocstat := objProcesosStats{Ejecutandose: strconv.Itoa(enejec), Suspendidos: strconv.Itoa(ensusp), Detenidos: strconv.Itoa(enidle), Zombies: strconv.Itoa(enzombie), Total: strconv.Itoa(tot)}
-		fmt.Println(objprocstat)
+		//fmt.Println(objprocstat)
 		/*lines := strings.Split(string(file_data), "\n")
 		fmt.Println(string(file_data))
 		for i := 0; i < 3; i++ {

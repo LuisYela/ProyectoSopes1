@@ -5,14 +5,14 @@ new Vue({
   created() {
     socket.on("statsMemory", (message) => {
       console.log(message)
-      this.messagescpu.push(message)
+      this.messagescpu=(message)
       data.push({y:contador++,a:message.uso})
       console.log(data)
       grafico()
     })
   },
   data: {
-    messagescpu: []
+    messagescpu: {}
   },
   methods: {
     pedirStatscpu() {
@@ -25,7 +25,7 @@ new Vue({
   created() {
     socket.on("statsram", (message) => {
       console.log(message)
-      this.messagesram.push(message)
+      this.messagesram=(message)
       dataram1.push({y:contador,a:(message.disponible/10000)})
       dataram2.push({y:contador,a:(message.libre/10000)})
       dataram3.push({y:contador,a:(message.total/10000)})
@@ -35,7 +35,7 @@ new Vue({
     })
   },
   data: {
-    messagesram: []
+    messagesram: {}
   },
   methods: {
     pedirStatsram() {
@@ -66,7 +66,8 @@ new Vue({
       this.cpustat = "";
     },
     borrarproc() {
-      socket.emit("borrarproc", this.cpustat)
+      console.log(this.procesokill)
+      socket.emit("borrarproceso", this.procesokill)
       this.cpustat = "";
     }
   }

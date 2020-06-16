@@ -24,8 +24,8 @@
         <div class="col-md-12 offset-md-1">
           <div id="ventana-cpu" class="card">
             <ul id="statuscpu" class="list-group">
-              <li v-for="m in messagescpu" class="list-group-item">
-                Uso del cpu es: {{ m.uso }}% [ocupado: {{ m.busy }} , total: {{ m.total}}]
+              <li class="list-group-item">
+                Uso del cpu es: {{ messagescpu.uso }}% [ocupado: {{ messagescpu.busy }} , total: {{ messagescpu.total}}]
               </li>
             </ul>
             <form>
@@ -45,11 +45,10 @@
     <div class="container mt-5">
       <div class="row">
         <div class="col-md-12 offset-md-1">
-
           <div id="ventana-ram" class="card">
             <ul id="statusram" class="list-group">
-              <li v-for="m in messagesram" class="list-group-item">
-                {{ m.libre }} {{ m.disponible }} {{ m.total }} 
+              <li class="list-group-item">
+                Usada: {{ messagesram.total - messagesram.libre }} Libre: {{ messagesram.libre }}  Disponible:{{ messagesram.disponible }}  Total:{{ messagesram.total }} 
               </li>
             </ul>
             <form>
@@ -117,6 +116,7 @@
                   <th>Estado</th>
                   <th>ParentID</th>
                   <th>Ram</th>
+                  <!--<th>Procesos Hijos</th>-->
                 </tr>
               </thead>
               <tbody>
@@ -127,12 +127,15 @@
                   <td>{{m.procestado}}</td>
                   <td>{{m.procpid}}</td>
                   <td>{{m.procram}}</td>
+                  <!--<th><button @click.prevent="borrarproc"+{{m.procid}}> Eliminar proceso </button></th>
+                  <th><button @click.prevent="hiojs"> Ver Hijos </button></th>-->
                 </tr>
               </tbody>
             </table>
+            <button @click.prevent="pedirStatsproc" class="btn btn-dark btn-block">Listar procesos</button>
             <form>
               <input type="text" v-model="procesokill" class="form-control">
-              <button @click.prevent="pedirStatsproc" class="btn btn-dark btn-block">Numero de procesos</button>
+              <button @click.prevent="borrarproc" class="btn btn-dark btn-block">Borrar proceso</button>
             </form>
           </div>
         </div>
